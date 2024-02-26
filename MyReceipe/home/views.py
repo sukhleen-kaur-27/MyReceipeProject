@@ -49,7 +49,7 @@ def update_receipe(request, id):
 def login_page(request):
     if request.method=='POST':
         username = request.POST.get('username')
-        password = request.POST.get('password')
+        password = request.POST.get('pass')
         if not User.objects.filter(username=username).exists():
             messages.error(request, "Invalid Username")
             return redirect('/login/')
@@ -58,6 +58,7 @@ def login_page(request):
             login(request, user)
             return redirect('/')  
         else:
+            print(password)
             messages.error(request, 'Invalid Password')
             return redirect('/login/')
     return render(request, 'login.html')
@@ -67,7 +68,8 @@ def register(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
-        password = request.POST.get('password')
+        password = request.POST.get('pass')
+        print(password)
         user = User.objects.filter(username=username)
         if user.exists():
             messages.info(request, 'Username already taken')
